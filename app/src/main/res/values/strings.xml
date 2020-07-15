@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">My App by Kotlin</string>
     <string name="button">Button</string>
+    <string name="tittle">Заголовок</string>
+    <string name="text_note">Текст заметки</string>
+    <string name="note_new">New note</string>
+
 </resources>

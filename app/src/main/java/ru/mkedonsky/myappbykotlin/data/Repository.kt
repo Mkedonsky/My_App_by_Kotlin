@@ -1,45 +1,76 @@
 package ru.mkedonsky.myappbykotlin.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import ru.mkedonsky.myappbykotlin.data.entyty.Note
+import java.util.*
+
 
 object NotesRepository {
-    private val notes : List<Note> = listOf(
+
+
+    private val notesLiveData = MutableLiveData<List<Note>>()
+
+    private val notes: MutableList<Note> = mutableListOf(
         Note(
-            "Моя первая заметка",
-        "Текст первой заметки",
-            0xfff06292.toInt()
+            UUID.randomUUID().toString(),
+            "Первая заметка",
+            "Текст первой заметки. Короткий, но интересный",
+            color = Note.Color.WHITE
         ),
         Note(
-            "Моя вторая заметка",
-            "Текст второй заметки",
-            0xff9575cd.toInt()
+            UUID.randomUUID().toString(),
+            "Вторая заметка",
+            "Текст второй заметки. Короткий, но интересный",
+            color = Note.Color.YELLOW
         ),
         Note(
-            "Моя третья заметка",
-            "Текст третьей заметки",
-            0xff64b5f6.toInt()
+            UUID.randomUUID().toString(),
+            "Третья заметка",
+            "Текст третьей заметки. Короткий, но интересный",
+            color = Note.Color.GREEN
         ),
         Note(
-            "Моя четвертая заметка",
-            "Текст четвертой заметки",
-            0xff4db6ac.toInt()
+            UUID.randomUUID().toString(),
+            "Четвертая заметка",
+            "Текст четвертой заметки. Короткий, но интересный",
+            color = Note.Color.BLUE
         ),
         Note(
-            "Моя пятая заметка",
-            "Текст пятой заметки",
-            0xffb2ff59.toInt()
+            UUID.randomUUID().toString(),
+            "Пятая заметка",
+            "Текст пятой заметки. Короткий, но интересный",
+            color = Note.Color.RED
         ),
         Note(
-            "Моя шестая заметка",
-            "Текст шестой заметки",
-            0xffffeb3b.toInt()
+            UUID.randomUUID().toString(),
+            "Шестая заметка",
+            "Текст шестой заметки. Короткий, но интересный",
+            color = Note.Color.VIOLET
         )
-
-
     )
 
-    fun getNotes(): List<Note>{
-        return notes
+    init {
+        notesLiveData.value = notes
+    }
+
+    fun saveNote(note: Note){
+        addOrReplace(note)
+        notesLiveData.value = notes
+    }
+
+    fun addOrReplace(note: Note){
+        for(i in 0 until notes.size){
+            if(notes[i] == note){
+                notes[i] = note
+                return
+            }
+        }
+        notes.add(note)
+    }
+
+    fun getNotes(): LiveData<List<Note>> {
+        return notesLiveData
     }
 
 }
