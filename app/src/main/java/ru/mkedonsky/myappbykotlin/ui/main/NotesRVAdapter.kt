@@ -9,8 +9,8 @@ import kotlinx.android.synthetic.main.item_note.view.*
 import ru.mkedonsky.myappbykotlin.R
 import ru.mkedonsky.myappbykotlin.data.entyty.Note
 
-class NotesRVAdapter(val onItemClick: ((Note) -> Unit)? = null) : RecyclerView
-.Adapter<NotesRVAdapter.ViewHolder>() {
+class NotesRVAdapter(val onItemClick: ((Note) -> Unit)? = null) :
+    RecyclerView.Adapter<NotesRVAdapter.ViewHolder>() {
 
     var notes: List<Note> = listOf()
         set(value) {

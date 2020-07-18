@@ -1,41 +1,42 @@
 package ru.mkedonsky.myappbykotlin.ui.main
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.mkedonsky.myappbykotlin.R
-import ru.mkedonsky.myappbykotlin.ui.main.note.NoteActivity
+import ru.mkedonsky.myappbykotlin.data.entyty.Note
+import ru.mkedonsky.myappbykotlin.ui.base.BaseActivity
+import ru.mkedonsky.myappbykotlin.ui.note.NoteActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
 
-    lateinit var viewModel: MainViewModel
+    override val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    override val layoutRes = R.layout.activity_main
     lateinit var adapter: NotesRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
 
         rv_notes.layoutManager = GridLayoutManager(this, 2)
         adapter = NotesRVAdapter {
-            NoteActivity.start(this, it)
+            NoteActivity.start(this, it.id)
         }
         rv_notes.adapter = adapter
-        viewModel.viewState().observe(this, Observer { state ->
-            state?.let { adapter.notes = it.notes }
-        })
+
         fab.setOnClickListener {
-            NoteActivity.start(this, null)
+            NoteActivity.start(this)
         }
+    }
 
-
+    override fun renderData(data: List<Note>?) {
+        data?.let {
+            adapter.notes = it
+        }
     }
 }
 

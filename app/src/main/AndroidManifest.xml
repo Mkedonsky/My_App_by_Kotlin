@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.main.note.NoteActivity"/>
+        <activity android:name="ru.mkedonsky.myappbykotlin.ui.note.NoteActivity" />
     </application>
 
 </manifest>

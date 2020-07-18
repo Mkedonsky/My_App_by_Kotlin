@@ -8,8 +8,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class FabBehavior(context: Context, attributeSet: AttributeSet)
-    : FloatingActionButton.Behavior(context, attributeSet) {
+class FabBehavior(context: Context, attributeSet: AttributeSet) :
+    FloatingActionButton.Behavior(context, attributeSet) {
 
     override fun onStartNestedScroll(
         coordinatorLayout: CoordinatorLayout,
@@ -52,16 +52,6 @@ class FabBehavior(context: Context, attributeSet: AttributeSet)
         } else if (dyConsumed < 0 && child.visibility != View.VISIBLE) {
             child.show()
         }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return javaClass.hashCode()
     }
 
 }
