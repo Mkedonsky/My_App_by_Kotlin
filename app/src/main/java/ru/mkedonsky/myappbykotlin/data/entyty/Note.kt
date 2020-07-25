@@ -3,6 +3,7 @@ package ru.mkedonsky.myappbykotlin.data.entyty
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import java.util.*
+
 @Parcelize
 data class Note(
     val id: String = "",

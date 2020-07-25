@@ -1,19 +1,30 @@
 package ru.mkedonsky.myappbykotlin.ui.base
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.mkedonsky.myappbykotlin.R
+import ru.mkedonsky.myappbykotlin.data.error.NoAuthException
 
 abstract class BaseActivity<T, S : BaseViewState<T>> : AppCompatActivity() {
 
+    companion object {
+        private const val RC_SIGNIN = 4242
+    }
+
     abstract val viewModel: BaseViewModel<T, S>
-    abstract val layoutRes: Int
+    abstract val layoutRes: Int?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutRes)
+        layoutRes?.let {
+            setContentView(it)
+        }
         setSupportActionBar(toolbar)
 
         viewModel.getViewState().observe(this, Observer { state ->
@@ -24,8 +35,11 @@ abstract class BaseActivity<T, S : BaseViewState<T>> : AppCompatActivity() {
     }
 
     protected fun renderError(error: Throwable?) {
-        error?.message?.let {
-            showError(it)
+        when (error) {
+            is NoAuthException -> startLogin()
+            else -> error?.message?.let {
+                showError(it)
+            }
         }
     }
 
@@ -34,4 +48,30 @@ abstract class BaseActivity<T, S : BaseViewState<T>> : AppCompatActivity() {
     }
 
     abstract fun renderData(data: T)
+
+    fun startLogin() {
+
+        val providers = listOf(
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
+
+        startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setLogo(R.drawable.android_robot)
+                .setTheme(R.style.LoginStyle)
+                .setAvailableProviders(providers)
+                .build()
+            , RC_SIGNIN
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == RC_SIGNIN && resultCode != Activity.RESULT_OK) {
+            finish()
+            return
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
 }

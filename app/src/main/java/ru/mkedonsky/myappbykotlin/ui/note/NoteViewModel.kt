@@ -7,6 +7,7 @@ import ru.mkedonsky.myappbykotlin.ui.base.BaseViewModel
 
 
 class NoteViewModel() : BaseViewModel<Note?, NoteViewState>() {
+
     init {
         viewStateLiveData.value = NoteViewState()
     }
@@ -16,7 +17,6 @@ class NoteViewModel() : BaseViewModel<Note?, NoteViewState>() {
     fun save(note: Note) {
         pendingNote = note
     }
-
 
     fun loadNote(noteId: String) {
         NotesRepository.getNoteById(noteId).observeForever { result ->

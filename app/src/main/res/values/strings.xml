@@ -1,8 +1,10 @@
 <resources>
-    <string name="app_name">My App by Kotlin</string>
-    <string name="button">Button</string>
-    <string name="tittle">Заголовок</string>
-    <string name="text_note">Текст заметки</string>
-    <string name="note_new">New note</string>
+    <string name="app_name">My notes</string>
+    <string name="note_new">Hoвая заметка</string>
+    <string name="logout_title">Выход</string>
+    <string name="logout_message">Вы уверены?</string>
+    <string name="logout_ok">Да</string>
+    <string name="logout_cancel">Нет</string>
+    <string name="logout_menu_title">Выход</string>
 
 </resources>
