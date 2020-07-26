@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">My Notes</string>
+    <string name="note_new" translatable="false">Hoвая заметка</string>
+    <string name="logout_title" translatable="false">Выход</string>
+    <string name="logout_message" translatable="false">Вы уверены?</string>
+    <string name="logout_ok" translatable="false">Да</string>
+    <string name="logout_cancel" translatable="false">Нет</string>
+    <string name="logout_menu_title" translatable="false">Выход</string>
+    <string name="note_change_color" translatable="false">Цвет</string>
+    <string name="note_delete" translatable="false">Удалить</string>
+    <string name="note_delete_message" translatable="false">Вы уверены?</string>
+    <string name="note_delete_cancel" translatable="false">Нет</string>
+    <string name="note_delete_ok" translatable="false">Да</string>
+</resources>

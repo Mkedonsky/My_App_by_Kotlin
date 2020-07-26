@@ -9,17 +9,16 @@ import ru.mkedonsky.myappbykotlin.data.entyty.User
 import ru.mkedonsky.myappbykotlin.data.error.NoAuthException
 import ru.mkedonsky.myappbykotlin.data.model.NoteResult
 
-class FirestoreProvider : RemoteDataProvider {
+class FirestoreProvider(val store: FirebaseFirestore, val auth: FirebaseAuth) : RemoteDataProvider {
 
     companion object {
         private const val NOTES_COLLECTION = "notes"
         private const val USERS_COLLECTION = "users"
     }
 
-    private val store = FirebaseFirestore.getInstance()
 
     private val currentUser
-        get() = FirebaseAuth.getInstance().currentUser
+        get() = auth.currentUser
 
 
     private fun getUserNotesCollection() = currentUser?.let {
@@ -75,5 +74,18 @@ class FirestoreProvider : RemoteDataProvider {
         }
     }
 
+    override fun deleteNote(noteId: String): LiveData<NoteResult> =
+        MutableLiveData<NoteResult>().apply {
+            try {
+                getUserNotesCollection().document(noteId).delete()
+                    .addOnSuccessListener {
+                        value = NoteResult.Success(null)
+                    }.addOnFailureListener {
+                        value = NoteResult.Error(it)
+                    }
+            } catch (e: Throwable) {
+                value = NoteResult.Error(e)
+            }
+        }
 
 }
