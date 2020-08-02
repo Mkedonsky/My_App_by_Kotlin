@@ -44,7 +44,7 @@ class NoteViewModel(val repository: NotesRepository) :
         }
     }
 
-    override fun onCleared() {
+    public override fun onCleared() {
         pendingNote?.let {
             repository.saveNote(it)
         }
